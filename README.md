@@ -23,8 +23,7 @@ Należy postem przesłać **name**,**surname**.
 Należy postem przesłać **name**,**surname**,**id**.
 
 **Usuwanie**
-/user/remove
-Należy postem przesłać **id**.
+/user/remove/id/{id}
 
 Screeny z postmana w /readme
 
