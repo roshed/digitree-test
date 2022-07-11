@@ -4,6 +4,7 @@ Aby uruchomić projekt należy wykonać polecenia:
 ```
 git repo clone roshed/digitree-test
 cd digitree-test
+composer update
 composer install
 ```
 
@@ -20,12 +21,10 @@ Należy postem przesłać **name**,**surname**.
 
 **Edytowanie**
 /user/edit
-Należy postem przesłać **name**,**surname**,**id**.
+Należy putem przesłać **name**,**surname**,**id**.
 
 **Usuwanie**
-/user/remove/id/{id}
-
-Screeny z postmana w /readme
+Należy deletem przesłać /user/remove/id/{id}
 
 
 
