@@ -13,7 +13,7 @@ use App\Entity\Users;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user/list", name="list_user")
+     * @Route("/user/list", name="list_user", methods={"GET"})
      */
     public function list()
     {
@@ -41,7 +41,7 @@ class UserController extends AbstractController
         $surname = $request->get('surname');
 
         if (empty($name) || empty($surname)) {
-            return new JsonResponse(['status' => 'Error','message'=>"Podano nie prawidłowe dane"]);
+            return new JsonResponse(['status' => 'Error','message'=>"Podano nie prawidłowe dane"], Response::HTTP_NO_CONTENT);
         }
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -52,7 +52,7 @@ class UserController extends AbstractController
         $errors = $validator->validate($user);
 
         if (count($errors) > 0) {
-            return new JsonResponse(['status' => 'Error', 'message' => "Dane nie są unikatowe"], Response::HTTP_CREATED);
+            return new JsonResponse(['status' => 'Error', 'message' => "Dane nie są unikatowe"], Response::HTTP_NO_CONTENT);
         }
 
         $entityManager->persist($user);
@@ -64,23 +64,23 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/edit", name="edit_user", methods={"POST"})
+     * @Route("/user/edit", name="PUT")
      */
-    public function edit(Request $request,ValidatorInterface $validator): JsonResponse
+    public function edit(Request $request, ValidatorInterface $validator): JsonResponse
     {
         $id = $request->get('id');
         $name = $request->get('name');
         $surname = $request->get('surname');
 
         if (empty($id) || empty($name) || empty($surname)) {
-            return new JsonResponse(['status' => 'Error','message'=>"Podano nie prawidłowe dane"]);
+            return new JsonResponse(['status' => 'Error','message'=>"Podano nie prawidłowe dane"], Response::HTTP_NO_CONTENT);
         }
         $entityManager = $this->getDoctrine()->getManager();
 
         $user = $this->getDoctrine()->getRepository(Users::class)->findOneBy(['id' => $id]);
 
         if(empty($user)){
-            return new JsonResponse(['status' => 'Error','message' => 'Nie znaleziono użytkownika'], Response::HTTP_OK);
+            return new JsonResponse(['status' => 'Error','message' => 'Nie znaleziono użytkownika'], Response::HTTP_NOT_FOUND);
         }
 
         $user->setName($name);
@@ -89,7 +89,7 @@ class UserController extends AbstractController
         $errors = $validator->validate($user);
 
         if (count($errors) > 0) {
-            return new JsonResponse(['status' => 'Error', 'message' => "Dane nie są unikatowe"], Response::HTTP_CREATED);
+            return new JsonResponse(['status' => 'Error', 'message' => "Dane nie są unikatowe"], Response::HTTP_NO_CONTENT);
         }
 
         $entityManager->persist($user);
@@ -99,18 +99,18 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/delete/id/{id}", name="delete_user")
+     * @Route("/user/delete/id/{id}", name="delete_user", name="DELETE")
      */
     public function delete($id): JsonResponse
     {
         if(empty($id)){
-            return new JsonResponse(['status' => 'Error','message' => 'Nie podano ID'], Response::HTTP_OK);
+            return new JsonResponse(['status' => 'Error','message' => 'Nie podano ID'], Response::HTTP_NO_CONTENT);
         }
 
         $user = $this->getDoctrine()->getRepository(Users::class)->findOneBy(['id' => $id]);
 
         if(empty($user)){
-            return new JsonResponse(['status' => 'Error','message' => 'Nie znaleziono użytkownika'], Response::HTTP_OK);
+            return new JsonResponse(['status' => 'Error','message' => 'Nie znaleziono użytkownika'], Response::HTTP_NOT_FOUND);
         }
         
 
