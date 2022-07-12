@@ -64,7 +64,7 @@ class UserController extends AbstractController
         $surname = $request->get('surname');
 
         if (empty($id) || empty($name) || empty($surname)) {
-            return new JsonResponse(['status' => 'Error','message'=>"Podano nie prawidłowe dane"], Response::HTTP_NO_CONTENT);
+            return new JsonResponse(['status' => 'Error','message'=>"Podano nieprawidłowe dane"], Response::HTTP_NO_CONTENT);
         }
         $entityManager = $this->getDoctrine()->getManager();
 
