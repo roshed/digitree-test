@@ -3,14 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UsersRepository;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Serializable;
 
 /**
  * Users
  *
  * @ORM\Table(name="users")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=UsersRepository::class)
  * @UniqueEntity(fields={"name"}, message="Dane nie są unikatowe")
  * @UniqueEntity(fields={"surname"}, message="Dane nie są unikatowe")
  */

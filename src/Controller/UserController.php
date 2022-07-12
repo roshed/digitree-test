@@ -19,17 +19,8 @@ class UserController extends AbstractController
     {
 
         $users = $this->getDoctrine()->getRepository(Users::class)->findAll();
-        $data = [];
     
-        foreach ($users as $user) {
-            $data[] = [
-                'id' => $user->getId(),
-                'name' => $user->getName(),
-                'surname' => $user->getSurname()
-            ];
-        }
-    
-        return new JsonResponse($data, Response::HTTP_OK);
+        return new JsonResponse($users, Response::HTTP_OK);
     }
 
     /**
@@ -41,7 +32,7 @@ class UserController extends AbstractController
         $surname = $request->get('surname');
 
         if (empty($name) || empty($surname)) {
-            return new JsonResponse(['status' => 'Error','message'=>"Podano nie prawidłowe dane"], Response::HTTP_NO_CONTENT);
+            return new JsonResponse(['status' => 'Error','message'=>"Podano nieprawidłowe dane"], Response::HTTP_NO_CONTENT);
         }
         $entityManager = $this->getDoctrine()->getManager();
 
