@@ -18,7 +18,7 @@ class UserController extends AbstractController
     public function list()
     {
 
-        $users = $this->getDoctrine()->getRepository(Users::class)->findAll();
+        $users = $this->getDoctrine()->getRepository(Users::class)->getList();
     
         return new JsonResponse($users, Response::HTTP_OK);
     }
